@@ -1,8 +1,10 @@
 ## Notes
 
-The docker container is built using the `cuda 10.0` devel containr which contains the cuda headers and other files necessary for development. To succesfully generate the pointclouds the colmap binary requires a cuda enabled graphics card. When compiling from source if colmap doesn't detect the cuda headers it will compile w.o cuda support. Using the development container solves this issue.
+The docker container is built using the `cuda 10.0` devel container which contains the cuda headers and other files necessary for development. To succesfully generate the pointclouds the colmap binary requires a cuda enabled graphics card. When compiling from source if colmap doesn't detect the cuda headers it will compile w.o cuda support. Compiling using the development container solves this issue.
 
-I was able to build successfully with `cuda 10.2`, however it seems that later cuda versions will potentially not build successfully on machine w.o cuda supported graphics cards aka `Apple devices`
+I was able to build successfully with `cuda 10.2`, however it seems that later cuda versions will potentially not build successfully on machine w.o cuda supported graphics cards aka [Apple devices](https://gizmodo.com/apple-and-nvidia-are-over-1840015246).
+
+This could also be an issue with colmap itself not upporting `cuda 10.3+`. I haven't dug into the issue so I'm not sure.
 
 I attempted to build with `cuda 11.0` and it failed miserably.
 
@@ -26,7 +28,7 @@ docker pull sebasmurphy/vissat
 
 ## Imagery
 
-I've run this code successfully against the IARPA mvs competition dataset over SAO PAULO, Brazil. The default vissat configuration file UTM bounding box is configured to process a chip from the dataset, although this can be changed to match whatever imagery you use.
+I've run this code successfully against the IARPA mvs competition dataset over SAO PAULO, Brazil. The default vissat configuration file UTM bounding box is configured to process a ROI from the dataset, although this can be changed to match whatever imagery and ROI you want.
 
 You can grab the panachromatic competition imagery from the following s3 bucket
 
@@ -42,7 +44,7 @@ Follow the [vissat documentation](https://github.com/Kai-46/VisSatSatelliteStere
 
 There are no static/hardcoded volumes so you'll need to pass the appropriate `volume -v` flag when running the container.
 
-The paths for imagery and outputs are all configurable in the vissat config.json file.
+The paths for imagery and outputs are all configurable in the vissat `config.json` file.
 
 > Some example docker commands
 
